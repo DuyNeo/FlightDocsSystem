@@ -13,6 +13,7 @@ namespace FlightDocsSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUser _user;
@@ -23,6 +24,8 @@ namespace FlightDocsSystem.Controllers
             _user = user;
         }
         [HttpPost, ActionName("user")]
+        [Authorize(Roles = "2")]
+
         public async Task<IActionResult> PostAsync(Users users)
         {
             if (ModelState.IsValid)
@@ -58,7 +61,6 @@ namespace FlightDocsSystem.Controllers
         }
         [HttpGet]
         [Route("ListUser")]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Users>>> GetUserAllAsync()
         {
 
@@ -66,6 +68,8 @@ namespace FlightDocsSystem.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "2")]
+
         public async Task<IActionResult> PutUser(int id, Users User)
         {
             if (id != User.UserId)
@@ -111,6 +115,8 @@ namespace FlightDocsSystem.Controllers
 
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles ="2")]
+
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.users.FindAsync(id);

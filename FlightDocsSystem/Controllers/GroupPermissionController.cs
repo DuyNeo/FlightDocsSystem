@@ -25,6 +25,8 @@ namespace FlightDocsSystem.Controllers
             _groupPermission = groupPermission;
         }
         [HttpPost]
+        [Authorize(Roles = "2")]
+
         public async Task<ActionResult<int>> AddGroup(GroupPermission group)
         {
             try
@@ -43,12 +45,15 @@ namespace FlightDocsSystem.Controllers
         }
         [HttpGet]
         [Route("ListGroup")]
+
         public async Task<ActionResult<IEnumerable<GroupPermission>>> GetGroupAllAsync()
         {
             return await _groupPermission.GetGroupPermissionAllAsync();
 
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "2")]
+
         public async Task<IActionResult> PutGroup(int id, GroupPermission group)
         {
             if (id != group.GroupId)
@@ -89,6 +94,7 @@ namespace FlightDocsSystem.Controllers
 
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "2")]
 
 
         public async Task<IActionResult> DeleteGroup(int id)

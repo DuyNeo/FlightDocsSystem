@@ -99,7 +99,7 @@ namespace FlightDocsSystem.Controllers
                 new Claim(ClaimTypes.Role, user.RoleId.ToString())
             };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_confi["Token:JwtSecurityKey"]));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_confi["Token:Key"]));
                 var expiry = DateTime.Now.AddDays(Convert.ToInt32(_confi["Token:JwtExpiryInDays"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

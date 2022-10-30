@@ -13,8 +13,8 @@ namespace FlightDocsSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
-
+    [Authorize]
+    
     public class DocumentListController : ControllerBase
     {
         private readonly IDocumentList _document;
@@ -26,7 +26,9 @@ namespace FlightDocsSystem.Controllers
         }
 
     [HttpPost]
-    public async Task<ActionResult<int>> AddDocument(DocumentList document)
+    [Authorize(Roles = "2")]
+
+        public async Task<ActionResult<int>> AddDocument(DocumentList document)
     {
         try
         {
@@ -44,13 +46,16 @@ namespace FlightDocsSystem.Controllers
     }
     [HttpGet]
     [Route("ListDocument")]
-    public async Task<ActionResult<IEnumerable<DocumentList>>> GetDocumentAllAsync()
+
+        public async Task<ActionResult<IEnumerable<DocumentList>>> GetDocumentAllAsync()
     {
         return await _document.GetDocumentListAllAsync();
 
     }
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutDocument(int id, DocumentList document)
+    [Authorize(Roles = "2")]
+
+        public async Task<IActionResult> PutDocument(int id, DocumentList document)
     {
         if (id != document.DocumentId)
         {
@@ -91,8 +96,9 @@ namespace FlightDocsSystem.Controllers
     }
     [HttpDelete("{id}")]
 
+     [Authorize(Roles = "2")]
 
-    public async Task<IActionResult> DeleteDocument(int id)
+        public async Task<IActionResult> DeleteDocument(int id)
     {
         var Document = await _context.documentLists.FindAsync(id);
         if (Document == null)

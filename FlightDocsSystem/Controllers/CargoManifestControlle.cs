@@ -13,18 +13,20 @@ namespace FlightDocsSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
 
-    public class CargoManifestControlle : ControllerBase
+    public class CargoManifestController : ControllerBase
     {
         private readonly ICargoManifest _cargoManifest;
         private readonly DataContext _context;
-        public CargoManifestControlle(DataContext context, ICargoManifest cargoManifest)
+        public CargoManifestController(DataContext context, ICargoManifest cargoManifest)
         {
             _context = context;
             _cargoManifest = cargoManifest;
         }
         [HttpPost]
+        [Authorize(Roles = "2")]
+
         public async Task<ActionResult<int>> AddCargoManifest(CargoManifest cargo)
         {
             try
@@ -43,12 +45,15 @@ namespace FlightDocsSystem.Controllers
         }
         [HttpGet]
         [Route("ListCargoManifest")]
+
         public async Task<ActionResult<IEnumerable<CargoManifest>>> GetCargoManifestAllAsync()
         {
             return await _cargoManifest.GetCargoManifestAllAsync();
 
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "2")]
+
         public async Task<IActionResult> PutCargoManifest(int id, CargoManifest cargo)
         {
             if (id != cargo.FlightId)
@@ -89,6 +94,7 @@ namespace FlightDocsSystem.Controllers
 
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "2")]
 
 
         public async Task<IActionResult> DeleteCargoManifest(int id)
